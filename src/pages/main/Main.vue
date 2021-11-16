@@ -118,9 +118,16 @@
         </div>
       </div>
       <div class="swipe-board__buttons">
-        <button @click="left" class="main-btn bg-1">Препарат 1</button>
-        <button @click="up" class="main-btn bg-2">Препарат 2</button>
-        <button @click="right" class="main-btn bg-3">Препарат 3</button>
+        <button
+        @click="left"
+        :disabled="disabledBtn"
+        class="main-btn bg-1">Препарат 1</button>
+        <button @click="up" 
+        :disabled="disabledBtn"
+        class="main-btn bg-2">Препарат 2</button>
+        <button @click="right" 
+        :disabled="disabledBtn"
+        class="main-btn bg-3">Препарат 3</button>
       </div>
     </div>
   </div>
@@ -155,6 +162,7 @@ export default {
       },
       cards: PATIENTS,
       isShowLabel: false,
+      disabledBtn: false,
       label: {
         color: "white",
         text: "Препарат 1",
@@ -222,6 +230,7 @@ export default {
       InteractEventBus.$emit(EVENTS.RIGHT);
     },
     left() {
+      console.log(this.index)
       InteractEventBus.$emit(EVENTS.LEFT);
     },
     up() {
@@ -229,6 +238,7 @@ export default {
     },
     emitAndNext(event) {
       this.isShowLabel = true;
+      this.disabledBtn = true;
       this.$emit(event, this.index);
       switch (event) {
         case EVENTS.RIGHT:
@@ -249,6 +259,7 @@ export default {
         this.index++;
         this.isVisible = true;
         this.isShowLabel = false;
+        this.disabledBtn = false;
       }, 400);
     },
   },
